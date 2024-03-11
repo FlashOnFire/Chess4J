@@ -1,5 +1,3 @@
-import org.gradle.internal.os.OperatingSystem
-
 plugins {
     id("java")
 }
@@ -55,4 +53,11 @@ dependencies {
     runtimeOnly("org.lwjgl", "lwjgl-opengles", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = lwjglNatives)
     implementation("org.joml", "joml", jomlVersion)
+}
+
+// Define a 'run' task to execute your application
+tasks.register<JavaExec>("run") {
+    description = "Run the application"
+    mainClass = "fr.onyx.Main"
+    classpath = sourceSets.getByName("main").runtimeClasspath
 }
