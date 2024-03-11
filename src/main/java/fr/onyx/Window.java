@@ -80,6 +80,36 @@ public class Window {
 		glfwShowWindow(window);
 	}
 
+	private void renderSquare(float x, float y, float dx, float dy) {
+		glBegin(GL_TRIANGLES);
+			glVertex2f(x, y);
+			glVertex2f(x, dy);
+			glVertex2f(dx, dy);
+
+			glVertex2f(x, y);
+			glVertex2f(dx, y);
+			glVertex2f(dx, dy);
+		glEnd();
+	}
+
+	private void renderCell(int i, int j) {
+		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+		
+		renderSquare(-0.5f, -0.5f, 0.5f, 0.5f);
+	}
+
+	private void renderBoard() {
+		for(int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++){
+				renderCell(i, j);
+			}
+		}
+	}
+
+	private void render() {
+		renderBoard();
+	}
+
 	private void loop() {
 		// This line is critical for LWJGL's interoperation with GLFW's
 		// OpenGL context, or any context that is managed externally.
@@ -91,16 +121,30 @@ public class Window {
 		// Set the clear color
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+
 		// Run the rendering loop until the user has attempted to close
 		// the window or has pressed the ESCAPE key.
 		while ( !glfwWindowShouldClose(window) ) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+
+			render();
 
 			glfwSwapBuffers(window); // swap the color buffers
 
 			// Poll for window events. The key callback above will only be
 			// invoked during this call.
 			glfwPollEvents();
+
+			try ( MemoryStack stack = stackPush() ) {
+				IntBuffer pWidth = stack.mallocInt(1); // int*
+				IntBuffer pHeight = stack.mallocInt(1); // int*
+
+				// Get the window size passed to glfwCreateWindow
+				glfwGetWindowSize(window, pWidth, pHeight);
+
+				glViewport(0, 0, pWidth.get(), pHeight.get());
+			} // the stack frame is popped automatically
 		}
 	}
 
