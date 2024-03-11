@@ -1,5 +1,6 @@
 package fr.onyx.pieces;
 
+import fr.onyx.Board;
 import org.joml.Vector2i;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Vector2i> getLegalMoves() {
+    public List<Vector2i> getLegalMoves(Board board) {
         List<Vector2i> moves = new ArrayList<>();
         moves.add(new Vector2i(1, 0));
         moves.add(new Vector2i(-1, 0));
