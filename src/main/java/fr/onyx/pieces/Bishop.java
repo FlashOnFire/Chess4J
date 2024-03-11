@@ -12,6 +12,6 @@ public class Bishop extends Piece {
 
     @Override
     public List<Vector2i> getLegalMoves(Board board) {
-        return null;
+        return diagonalMoves(board);
     }
 }
