@@ -1,6 +1,7 @@
 package fr.onyx;
 
 import fr.onyx.pieces.Piece;
+import org.joml.Vector2i;
 
 public class Board {
     private static final int width = 8;
@@ -8,35 +9,35 @@ public class Board {
 
     private Piece[][] cases = new Piece[width][height];
 
-    public Piece getPiece(int x, int y) {
-        return cases[x][y];
+    public Piece getPiece(Vector2i position) {
+        return cases[position.x][position.y];
     }
 
-    public void setPiece(int x, int y, Piece piece) {
-        cases[x][y] = piece;
+    public void setPiece(Vector2i position, Piece piece) {
+        cases[position.x][position.y] = piece;
     }
 
-    public void removePiece(int x, int y) {
-        cases[x][y] = null;
+    public void removePiece(Vector2i position) {
+        cases[position.x][position.y] = null;
     }
 
-    public boolean isInside(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height;
+    public boolean isInside(Vector2i position) {
+        return position.x >= 0 && position.x < width && position.y >= 0 && position.y < height;
     }
 
-    public boolean isOccupied(int x, int y) {
-        return cases[x][y] != null;
+    public boolean isOccupied(Vector2i position) {
+        return isInside(position) && cases[position.x][position.y] != null;
     }
 
-    public boolean isFree(int x, int y) {
-        return isInside(x, y) && !isOccupied(x, y);
+    public boolean isFree(Vector2i position) {
+        return isInside(position) && cases[position.x][position.y] == null;
     }
 
-    public boolean isEnemy(int x, int y, Piece.Color color) {
-        return isInside(x, y) && isOccupied(x, y) && getPiece(x, y).getColor() != color;
+    public boolean isEnemy(Vector2i position, Piece.Color color) {
+        return isInside(position) && isOccupied(position) && getPiece(position).getColor() != color;
     }
 
-    public boolean isAlly(int x, int y, Piece.Color color) {
-        return isInside(x, y) && isOccupied(x, y) && getPiece(x, y).getColor() == color;
+    public boolean isAlly(Vector2i position, Piece.Color color) {
+        return isInside(position) && isOccupied(position) && getPiece(position).getColor() == color;
     }
 }
