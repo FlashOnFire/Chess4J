@@ -6,8 +6,8 @@ import org.joml.Vector2i;
 import java.util.List;
 
 public class Knight extends Piece {
-    Knight(Vector2i position) {
-        super(position);
+    Knight(Vector2i position, Piece.Color color) {
+        super(position, color);
     }
 
     @Override

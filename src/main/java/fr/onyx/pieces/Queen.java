@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
-    Queen(Vector2i position) {
-        super(position);
+    Queen(Vector2i position, Piece.Color color) {
+        super(position, color);
     }
 
     @Override

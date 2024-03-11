@@ -6,8 +6,8 @@ import org.joml.Vector2i;
 import java.util.List;
 
 public class Rook extends Piece {
-    Rook(Vector2i position) {
-        super(position);
+    Rook(Vector2i position, Piece.Color color) {
+        super(position, color);
     }
 
     @Override
