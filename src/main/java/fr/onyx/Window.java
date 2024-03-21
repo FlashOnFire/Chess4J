@@ -39,7 +39,7 @@ public class Window {
 		GLFWErrorCallback.createPrint(System.err).set();
 
 		// Initialize GLFW. Most GLFW functions will not work before doing this.
-		if ( !glfwInit() )
+		if (!glfwInit())
 			throw new IllegalStateException("Unable to initialize GLFW");
 
 		// Configure GLFW
@@ -48,12 +48,12 @@ public class Window {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
 		// Create the window
-		window = glfwCreateWindow(1920, 1080, "Chess4J", NULL, NULL);
-		if ( window == NULL )
+		window = glfwCreateWindow(1000, 1000, "Chess4J", NULL, NULL);
+		if (window == NULL)
 			throw new RuntimeException("Failed to create the GLFW window");
 
 		// Get the thread stack and push a new frame
-		try ( MemoryStack stack = stackPush() ) {
+		try (MemoryStack stack = stackPush()) {
 			IntBuffer pWidth = stack.mallocInt(1); // int*
 			IntBuffer pHeight = stack.mallocInt(1); // int*
 
@@ -65,10 +65,9 @@ public class Window {
 
 			// Center the window
 			glfwSetWindowPos(
-				window,
-				(vidmode.width() - pWidth.get(0)) / 2,
-				(vidmode.height() - pHeight.get(0)) / 2
-			);
+					window,
+					(vidmode.width() - pWidth.get(0)) / 2,
+					(vidmode.height() - pHeight.get(0)) / 2);
 		} // the stack frame is popped automatically
 
 		// Make the OpenGL context current
@@ -81,26 +80,34 @@ public class Window {
 	}
 
 	private void renderSquare(float x, float y, float dx, float dy) {
+		float trueX = 2 * x - 1;
+		float trueY = 2 * y - 1;
+		float trueDX = 2 * dx - 1;
+		float trueDY = 2 * dy - 1;
 		glBegin(GL_TRIANGLES);
-			glVertex2f(x, y);
-			glVertex2f(x, dy);
-			glVertex2f(dx, dy);
+		glVertex2f(trueX, trueY);
+		glVertex2f(trueX, trueDY);
+		glVertex2f(trueDX, trueDY);
 
-			glVertex2f(x, y);
-			glVertex2f(dx, y);
-			glVertex2f(dx, dy);
+		glVertex2f(trueX, trueY);
+		glVertex2f(trueDX, trueY);
+		glVertex2f(trueDX, trueDY);
 		glEnd();
 	}
 
 	private void renderCell(int i, int j) {
-		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-		
-		renderSquare(-0.5f, -0.5f, 0.5f, 0.5f);
+		if ((i + j) % 2 == 1) {
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		} else {
+			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+		}
+
+		renderSquare(i / 8.0f, j / 8.0f, (i + 1) / 8.0f, (j + 1) / 8.0f);
 	}
 
 	private void renderBoard() {
-		for(int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++){
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				renderCell(i, j);
 			}
 		}
@@ -125,7 +132,7 @@ public class Window {
 
 		// Run the rendering loop until the user has attempted to close
 		// the window or has pressed the ESCAPE key.
-		while ( !glfwWindowShouldClose(window) ) {
+		while (!glfwWindowShouldClose(window)) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
 			render();
@@ -136,7 +143,7 @@ public class Window {
 			// invoked during this call.
 			glfwPollEvents();
 
-			try ( MemoryStack stack = stackPush() ) {
+			try (MemoryStack stack = stackPush()) {
 				IntBuffer pWidth = stack.mallocInt(1); // int*
 				IntBuffer pHeight = stack.mallocInt(1); // int*
 
