@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
-    Knight(Vector2i position, Piece.Color color) {
+    public Knight(Vector2i position, Piece.Color color) {
         super(position, color);
     }
 

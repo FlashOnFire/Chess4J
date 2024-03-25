@@ -1,6 +1,6 @@
 package fr.onyx;
 
-import fr.onyx.pieces.Piece;
+import fr.onyx.pieces.*;
 import org.joml.Vector2i;
 
 public class Board {
@@ -9,6 +9,26 @@ public class Board {
 
     private Piece[][] cases = new Piece[width][height];
 
+    public void init8board() {
+        for (int i = 0; i<8; i++) {
+            cases[1][i] = new Pawn(new Vector2i(1, i), Piece.Color.BLACK);
+            cases[1][i] = new Pawn(new Vector2i(6, i), Piece.Color.WHITE);
+        }
+        for (int i = 0; i<2; i++) {
+            cases[0][7*i] = new Rook(new Vector2i(0, 7*i), Piece.Color.BLACK);
+            cases[7][7*i] = new Rook(new Vector2i(7, 7*i), Piece.Color.WHITE);
+
+            cases[0][1 + 5*i] = new Knight(new Vector2i(0, 0), Piece.Color.BLACK);
+            cases[7][1 + 5*i] = new Knight(new Vector2i(0, 0), Piece.Color.WHITE);
+
+            cases[0][2 + 3*i] = new Bishop(new Vector2i(0, 0), Piece.Color.BLACK);
+            cases[7][2 + 3*i] = new Bishop(new Vector2i(0, 0), Piece.Color.WHITE);
+        }
+        cases[0][3] = new Queen(new Vector2i(0, 0), Piece.Color.BLACK);
+        cases[7][4] = new Queen(new Vector2i(0, 0), Piece.Color.WHITE);
+        cases[0][4] = new King(new Vector2i(0, 0), Piece.Color.BLACK);
+        cases[7][3] = new King(new Vector2i(0, 0), Piece.Color.WHITE);
+    }
     public Piece getPiece(Vector2i position) {
         return cases[position.x][position.y];
     }

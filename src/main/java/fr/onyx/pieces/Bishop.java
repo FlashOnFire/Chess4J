@@ -6,7 +6,7 @@ import org.joml.Vector2i;
 import java.util.List;
 
 public class Bishop extends Piece {
-    Bishop(Vector2i position, Piece.Color color) {
+    public Bishop(Vector2i position, Piece.Color color) {
         super(position, color);
     }
 

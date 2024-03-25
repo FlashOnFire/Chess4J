@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
-    Pawn(Vector2i position, Piece.Color color) {
+    public Pawn(Vector2i position, Piece.Color color) {
         super(position, color);
     }
 

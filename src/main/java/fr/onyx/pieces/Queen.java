@@ -6,7 +6,7 @@ import org.joml.Vector2i;
 import java.util.List;
 
 public class Queen extends Piece {
-    Queen(Vector2i position, Piece.Color color) {
+    public Queen(Vector2i position, Piece.Color color) {
         super(position, color);
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class King extends Piece {
 
-    King(Vector2i position, Piece.Color color) {
+    public King(Vector2i position, Piece.Color color) {
         super(position, color);
     }
 
