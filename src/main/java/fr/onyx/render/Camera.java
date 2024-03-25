@@ -1,7 +1,6 @@
 package fr.onyx.render;
 
 import org.joml.Matrix4f;
-import org.joml.Vector2i;
 import org.joml.Vector3f;
 
 public class Camera {
@@ -117,8 +116,7 @@ public class Camera {
         Vector3f forward = new Vector3f(
                 (float) (Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch))),
                 (float) (Math.sin(Math.toRadians(pitch))),
-                (float) (Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)))
-        );
+                (float) (Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch))));
 
         return new Matrix4f()
                 .perspective((float) Math.toRadians(fov), aspect, zNear, zFar)
