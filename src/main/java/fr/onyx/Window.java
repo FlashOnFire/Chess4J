@@ -5,6 +5,8 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 
+import fr.onyx.render.Renderer;
+
 import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
@@ -17,6 +19,12 @@ public class Window {
 
 	// The window handle
 	private long window;
+
+	private Renderer renderer;
+
+	public Window() {
+		this.renderer = new Renderer();
+	}
 
 	public void run() {
 		System.out.println("LWJGL " + Version.getVersion() + "!");
@@ -79,42 +87,8 @@ public class Window {
 		glfwShowWindow(window);
 	}
 
-	private void renderSquare(float x, float y, float dx, float dy) {
-		float trueX = 2 * x - 1;
-		float trueY = 2 * y - 1;
-		float trueDX = 2 * dx - 1;
-		float trueDY = 2 * dy - 1;
-		glBegin(GL_TRIANGLES);
-		glVertex2f(trueX, trueY);
-		glVertex2f(trueX, trueDY);
-		glVertex2f(trueDX, trueDY);
-
-		glVertex2f(trueX, trueY);
-		glVertex2f(trueDX, trueY);
-		glVertex2f(trueDX, trueDY);
-		glEnd();
-	}
-
-	private void renderCell(int i, int j) {
-		if ((i + j) % 2 == 1) {
-			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		} else {
-			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
-		}
-
-		renderSquare(i / 8.0f, j / 8.0f, (i + 1) / 8.0f, (j + 1) / 8.0f);
-	}
-
-	private void renderBoard() {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				renderCell(i, j);
-			}
-		}
-	}
-
 	private void render() {
-		renderBoard();
+		renderer.Render();
 	}
 
 	private void loop() {
@@ -124,6 +98,8 @@ public class Window {
 		// creates the GLCapabilities instance and makes the OpenGL
 		// bindings available for use.
 		GL.createCapabilities();
+
+		renderer.Init();
 
 		// Set the clear color
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
