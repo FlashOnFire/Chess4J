@@ -27,6 +27,7 @@ public class Knight extends Piece {
             }
         }
 
+        moves = moveInside(moves, board);
         return moves;
     }
 }

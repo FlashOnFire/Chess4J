@@ -33,6 +33,7 @@ public class King extends Piece {
             moves.add(new Vector2i(2, 0));
         }
 
+        moves = moveInside(moves, board);
         return moves;
     }
 }

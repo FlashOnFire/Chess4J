@@ -39,6 +39,7 @@ public class Pawn extends Piece {
         only for this turn you can go at (5, 2) and take enemie's pawn at (5, 4)
          */
 
+        moves = moveInside(moves, board);
         return moves;
     }
 }

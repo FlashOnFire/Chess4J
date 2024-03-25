@@ -18,22 +18,27 @@ public class Board {
             cases[0][7*i] = new Rook(new Vector2i(0, 7*i), Piece.Color.BLACK);
             cases[7][7*i] = new Rook(new Vector2i(7, 7*i), Piece.Color.WHITE);
 
-            cases[0][1 + 5*i] = new Knight(new Vector2i(0, 0), Piece.Color.BLACK);
-            cases[7][1 + 5*i] = new Knight(new Vector2i(0, 0), Piece.Color.WHITE);
+            cases[0][1 + 5*i] = new Knight(new Vector2i(0, 1 + 5*i), Piece.Color.BLACK);
+            cases[7][1 + 5*i] = new Knight(new Vector2i(7, 1 + 5*i), Piece.Color.WHITE);
 
-            cases[0][2 + 3*i] = new Bishop(new Vector2i(0, 0), Piece.Color.BLACK);
-            cases[7][2 + 3*i] = new Bishop(new Vector2i(0, 0), Piece.Color.WHITE);
+            cases[0][2 + 3*i] = new Bishop(new Vector2i(0, 2 + 3*i), Piece.Color.BLACK);
+            cases[7][2 + 3*i] = new Bishop(new Vector2i(7, 2 + 3*i), Piece.Color.WHITE);
         }
-        cases[0][3] = new Queen(new Vector2i(0, 0), Piece.Color.BLACK);
-        cases[7][4] = new Queen(new Vector2i(0, 0), Piece.Color.WHITE);
-        cases[0][4] = new King(new Vector2i(0, 0), Piece.Color.BLACK);
-        cases[7][3] = new King(new Vector2i(0, 0), Piece.Color.WHITE);
+
+        cases[0][3] = new Queen(new Vector2i(0, 3), Piece.Color.BLACK);
+        cases[7][4] = new Queen(new Vector2i(7, 4), Piece.Color.WHITE);
+
+        cases[0][4] = new King(new Vector2i(0, 4), Piece.Color.BLACK);
+        cases[7][3] = new King(new Vector2i(7, 3), Piece.Color.WHITE);
     }
     public Piece getPiece(Vector2i position) {
         return cases[position.x][position.y];
     }
 
     public void setPiece(Vector2i position, Piece piece) {
+        if (isEnemy(position, piece.getColor())) {
+            removePiece(position);
+        }
         cases[position.x][position.y] = piece;
     }
 

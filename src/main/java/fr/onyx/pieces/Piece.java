@@ -12,6 +12,7 @@ public abstract class Piece {
 
     Piece(Vector2i position, Piece.Color color) {
         this.position = position;
+        this.color = color;
     }
 
     public abstract List<Vector2i> getLegalMoves(Board board);
@@ -73,6 +74,7 @@ public abstract class Piece {
             }
         }
 
+        moves = moveInside(moves, board);
         return moves;
     }
 
@@ -124,6 +126,18 @@ public abstract class Piece {
             }
         }
 
+        moves = moveInside(moves, board);
         return moves;
+    }
+    public List<Vector2i> moveInside(List<Vector2i> moves, Board board) {
+        List<Vector2i> moves_insides = new ArrayList<>();
+
+        for (Vector2i move: moves) {
+            if (board.isInside(move)) {
+                moves_insides.add(move);
+            }
+        }
+
+        return  moves_insides;
     }
 }

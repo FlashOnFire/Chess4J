@@ -15,6 +15,7 @@ public class Queen extends Piece {
         List<Vector2i> moves = diagonalMoves(board);
         moves.addAll(linearMoves(board));
 
+        moves = moveInside(moves, board);
         return moves;
     }
 }
