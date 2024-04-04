@@ -1,5 +1,7 @@
 package fr.onyx.render.shader;
 
+import org.joml.Matrix4f;
+
 public class BoardShader extends ShaderProgram {
 
 	private static String vertexShader = """
@@ -8,10 +10,12 @@ public class BoardShader extends ShaderProgram {
 			layout(location = 0) in vec3 position;
 			layout(location = 1) in vec3 color;
 
+			uniform mat4 camMatrix;
+
 			out vec3 pass_color;
 
 			void main(void){
-				gl_Position = vec4(position.x, position.z, position.y, 1.0);
+				gl_Position = camMatrix * vec4(position, 1.0);
 				pass_color = color;
 			}
 				""";
@@ -28,17 +32,22 @@ public class BoardShader extends ShaderProgram {
 			}
 				""";
 
+	private int location_CamMatrix = 0;
+
 	public BoardShader() {
 
 	}
 
 	public void LoadShader() {
 		super.LoadProgram(vertexShader, fragmentShader);
-		GetAllUniformLocation();
 	}
 
 	@Override
 	protected void GetAllUniformLocation() {
+		location_CamMatrix = GetUniformLocation("camMatrix");
+	}
 
+	public void SetCamMatrix(Matrix4f mat) {
+		LoadMat4(location_CamMatrix, mat);
 	}
 }

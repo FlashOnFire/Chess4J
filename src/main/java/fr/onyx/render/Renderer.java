@@ -108,7 +108,9 @@ public class Renderer {
 		this.vao.Unbind();
 	}
 
-	public void Render() {
+	public void Render(Camera cam) {
+		this.shader.Start();
+		this.shader.SetCamMatrix(cam.getMatrix());
 		RenderVao(vao);
 	}
 

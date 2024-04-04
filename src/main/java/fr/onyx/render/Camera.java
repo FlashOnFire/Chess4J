@@ -5,7 +5,8 @@ import org.joml.Vector3f;
 
 public class Camera {
     public static final float fov = 70.0f;
-    public static final float aspect = 70.0f;
+    // should be changed to match screen
+    public static final float aspect = 1.0f;
     public static final float zNear = 0.01f;
     public static final float zFar = 100.0f;
 
@@ -15,6 +16,8 @@ public class Camera {
     private float pitch = 0.0f;
 
     public Camera() {
+        this.pos = new Vector3f(0, 2.0f, 0);
+        setRotation(0.0f, -3.14150f / 2.0f);
     }
 
     public void move(float x, float y) {
@@ -78,13 +81,13 @@ public class Camera {
     }
 
     public void moveForward(float distance) {
-        pos.x += distance * (float) Math.cos(Math.toRadians(yaw));
-        pos.y += distance * (float) Math.sin(Math.toRadians(yaw));
+        pos.x += distance * (float) Math.cos(yaw);
+        pos.y += distance * (float) Math.sin(yaw);
     }
 
     public void moveRight(float distance) {
-        pos.x += distance * (float) Math.cos(Math.toRadians(yaw));
-        pos.y += distance * (float) Math.sin(Math.toRadians(yaw));
+        pos.x += distance * (float) Math.cos(yaw);
+        pos.y += distance * (float) Math.sin(yaw);
     }
 
     public void moveUp(float distance) {
@@ -114,12 +117,12 @@ public class Camera {
 
     public Matrix4f getMatrix() {
         Vector3f forward = new Vector3f(
-                (float) (Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch))),
-                (float) (Math.sin(Math.toRadians(pitch))),
-                (float) (Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch))));
+                (float) (Math.cos(yaw) * Math.cos(pitch)),
+                (float) (Math.sin(pitch)),
+                (float) (Math.sin(yaw) * Math.cos(pitch)));
 
         return new Matrix4f()
-                .perspective((float) Math.toRadians(fov), aspect, zNear, zFar)
-                .lookAt(pos, forward, new Vector3f(0.0f, 0.0f, 1.0f));
+                .perspective((float) (Math.toRadians(fov)), aspect, zNear, zFar)
+                .lookAt(pos, forward, new Vector3f(0.0f, 1.0f, 0.0f));
     }
 }

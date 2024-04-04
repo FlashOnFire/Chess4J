@@ -5,6 +5,7 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 
+import fr.onyx.render.Camera;
 import fr.onyx.render.Renderer;
 
 import java.nio.*;
@@ -21,9 +22,11 @@ public class Window {
 	private long window;
 
 	private Renderer renderer;
+	private Camera cam;
 
 	public Window() {
 		this.renderer = new Renderer();
+		this.cam = new Camera();
 	}
 
 	public void run() {
@@ -88,7 +91,8 @@ public class Window {
 	}
 
 	private void render() {
-		renderer.Render();
+		cam.rotate(0.01f, 0.01f);
+		renderer.Render(cam);
 	}
 
 	private void loop() {
